@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-export default class TaskInfo extends Component{
+class TaskInfo extends Component{
 	constructor(props){
 		super(props);
 		this.state = {
@@ -8,21 +8,22 @@ export default class TaskInfo extends Component{
 			}
             this.handleChecked = this.handleChecked.bind(this);
 	}
-    handleChecked () {
-        if(this.props.isChecked){
-            console.log("Show me the money")
-        }
-        else{
-            console.log("Pum")
-        }
-
+   handleChecked (id) {
+        this.setState(
+            this.state.tasks.map(function(task){
+                if(task.id === id) {
+                    task.checked = !task.checked
+                }
+                return task;
+            })
+        );
     }
 	render(){
 		return(
 			<div>
                 <ul>
 				{this.state.tasks.map((props)=>
-				<li><input type="checkbox" checked={props.isChecked} onChange={this.handleChecked()}></input> {props.task}</li>
+				<li><input type="checkbox" checked={props.isChecked} onChange={this.handleChecked(props.id)}></input> {props.task}</li>
                 )}
                 </ul>
 			</div>
@@ -30,3 +31,5 @@ export default class TaskInfo extends Component{
 	}
 
 }
+
+export default TaskInfo;
